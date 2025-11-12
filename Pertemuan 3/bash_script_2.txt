@@ -1,3 +1,5 @@
+echo "=== Aplikasi Sederhana untuk Setting Harga Diskon ==="
+
 pilihan="y"
 
 while [ "$pilihan" = "y" ]; do
