@@ -1,0 +1,37 @@
+pilihan="y"
+
+while [ "$pilihan" = "y" ]; do
+  echo -n "Masukkan Nama Produk  : "
+  read nama_produk
+
+  echo -n "Masukkan Harga Produk : "
+  read harga_awal
+
+  echo -n "Masukkan Diskon(%)    : " 
+  read diskon
+
+  echo " "
+
+  jml_diskon=$(( harga_awal*diskon/100 ))
+  harga_akhir=$(( harga_awal-jml_diskon ))
+
+  echo === Detail Diskon ===
+  echo "Nama Produk     : ${nama_produk}"
+  echo "Harga Awal      : ${harga_awal}"
+  echo "Diskon          : ${diskon}%"
+  echo "Potongan Harga  : ${jml_diskon}"
+  echo "Harga Akhir     : ${harga_akhir}"
+  
+  echo " "
+
+  echo -n "Apakah ingin menghitung produk lain? (y/n): "
+  read pilihan
+  
+  echo " "
+
+  if [[ "$pilihan" = "y" || "$pilihan" = "Y" ]]; then
+    pilihan="y"
+  fi
+
+done
+
