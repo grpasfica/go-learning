@@ -80,6 +80,9 @@ income(){
       done
 
       echo -e "  Total Pemasukkan saat ini adalah ${CYAN}Rp $total${RESET}"
+    elif [[ "$menu_pemasukkan" = 4 ]]; then
+	echo -e "${CYAN}  Kembali ke menu utama ...${RESET}"
+	break
     fi
   done  
 }
