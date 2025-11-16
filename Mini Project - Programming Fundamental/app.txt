@@ -13,6 +13,7 @@ RESET="\033[0m"
 RED="\033[31m"
 BLACK="\033[30m"
 YELLOW="\033[33m"
+MAGENTA="\033[35m"
 
 # Global variable
 bulan=(januari februari maret april mei juni juli agustus september oktober november desember)
@@ -49,8 +50,7 @@ income(){
 
       printf "  %-10s ${CYAN} | ${RESET}%-17s\n" "Bulan" "Pemasukkan"
       for ((i=0; i<${#bulan[@]}; i++)); do
-	printf "  %-10s${RESET} ${CYAN} | ${RESET}%-17s\n" "${bulan[i]}" "${pemasukkan[i]}"
-	# echo "  ${bulan[i]} : ${pemasukkan[i]}"
+          printf "  %-10s${RESET} ${CYAN} | ${RESET}%-17s\n" "${bulan[i]}" "${pemasukkan[i]}"
       done
 
     elif [[ "$menu_pemasukkan" = 2 ]]; then
@@ -60,15 +60,15 @@ income(){
       read angka_bulan
 
       if [[ "$angka_bulan" -ge 1 && "$angka_bulan" -le 12 ]]; then
-	index=$((angka_bulan-1))
-	echo -n "  Jumlah pemasukkan : "
-	read jml_pemasukkan
-	
-	# Update data
+        index=$((angka_bulan-1))
+        echo -n "  Jumlah pemasukkan : "
+        read jml_pemasukkan
+        
+        # Update data
       	pemasukkan[$index]=$jml_pemasukkan
       	echo -e "  Data pada bulan ${YELLOW}${bulan[$index]}${RESET} berhasil diubah."
       else 
-	echo -e "${RED}  Harap masukkan Angka 1-12 ! ${RESET}"
+	      echo -e "${RED}  Harap masukkan Angka 1-12 ! ${RESET}"
       fi
     elif [[ "$menu_pemasukkan" = 3 ]]; then
       echo -e "\n TOTAL DATA PEMASUKKAN"
@@ -76,20 +76,42 @@ income(){
       # inisiasi variabel total
       total=0
       for i in "${pemasukkan[@]}"; do
-	total=$((total+i))
+	      total=$((total+i))
       done
 
-      echo -e "  Total Pemasukkan saat ini adalah ${CYAN}Rp $total${RESET}"
+      echo -e "  Total Pemasukkan saat ini adalah ${YELLOW}Rp $total${RESET}"
     elif [[ "$menu_pemasukkan" = 4 ]]; then
-	echo -e "${CYAN}  Kembali ke menu utama ...${RESET}"
-	break
+	    echo -e "${YELLOW}  Kembali ke menu utama ...${RESET}"
+	    break
     fi
   done  
 }
 
 # Function Pengeluaran
 outcome(){
-  echo "ini method outcome"
+  # Looping menu pengeluaran
+  while true; do
+    echo -e "${MAGENTA}\n  === MENU PENGELUARAN ===${RESET}\n"
+    
+    echo -n "  Inputkan jumlah item pengeluaran bulan November: "
+    read item
+
+    total=0
+    for ((i=0; i<item; i++)); do
+        echo -ne "\n  Inputkan item ke-$((i+1))"
+
+        echo -ne "\n  Jumlah pengeluaran: "
+        read value
+        pengeluaran[i]=value
+
+        total=$((total+pengeluaran[i]))
+    done
+    echo -e "  Total pengeluaran saat ini adalah ${MAGENTA} Rp $total"
+
+    echo -e "${MAGENTA}  Kembali ke Menu Utama"
+    
+    break
+  done
 }
 
 # Function Saldo
