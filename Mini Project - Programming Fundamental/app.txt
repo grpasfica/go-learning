@@ -41,26 +41,16 @@ income(){
     read menu_pemasukkan
     
     if [[ "$menu_pemasukkan" = 1 ]]; then
-      # Deklarasi Array Asosiatif
-      declare -A pemasukkan=(
-        [januari]=4500000
-        [februari]=5000000
-        [maret]=0
-        [april]=0
-        [mei]=0
-        [juni]=0
-        [juli]=0
-        [agustus]=0
-        [september]=0
-        [oktober]=0
-        [november]=0
-        [desember]=0
-      )
+      # Array
+      bulan=(januari februari maret april mei juni juli agustus september oktober november desember)
+      pemasukkan=(1500000 3000000 5000000 1000000 2500000 6500000 4000000 1000000 2000000 3000000 0 0)
 
       # Menampilkan semua data
-      echo "  Berikut ini adalah data pemasukkan untuk Tahun 2025"
-      for bulan in "${!pemasukkan[@]}"; do
-        echo "  $bulan: ${pemasukkan[bulan]}"
+      echo -e "\n  DATA PEMASUKKAN TAHUN 2025"
+      printf "  %-10s ${CYAN} | ${RESET}%-15s\n" "Bulan" "Pemasukkan"
+      for ((i=0; i<${#bulan[@]}; i++)); do
+	printf "  %-10s${RESET} ${CYAN} | ${RESET}%-15s\n" "${bulan[i]}" "${pemasukkan[i]}"
+	# echo "  ${bulan[i]} : ${pemasukkan[i]}"
       done
     fi
   done  
