@@ -37,7 +37,7 @@ income(){
     echo -e "${YELLOW}\n  === MENU PEMASUKKAN ===${RESET}\n"
     echo "  1. Lihat Data Pemasukkan"
     echo "  2. Input Data Pemasukkan"
-    echo "  3. Akumulasi Pemasukkan"
+    echo "  3. Total Data Pemasukkan"
     echo "  4. Kembali ke Menu Utama"
     
     echo -ne "\n  Pilih Menu(1-4): "
@@ -52,6 +52,7 @@ income(){
 	printf "  %-10s${RESET} ${CYAN} | ${RESET}%-17s\n" "${bulan[i]}" "${pemasukkan[i]}"
 	# echo "  ${bulan[i]} : ${pemasukkan[i]}"
       done
+
     elif [[ "$menu_pemasukkan" = 2 ]]; then
       echo -e "\n  INPUT DATA PEMASUKKAN"
 
@@ -69,6 +70,16 @@ income(){
       else 
 	echo -e "${RED}  Harap masukkan Angka 1-12 ! ${RESET}"
       fi
+    elif [[ "$menu_pemasukkan" = 3 ]]; then
+      echo -e "\n TOTAL DATA PEMASUKKAN"
+      
+      # inisiasi variabel total
+      total=0
+      for i in "${pemasukkan[@]}"; do
+	total=$((total+i))
+      done
+
+      echo -e "  Total Pemasukkan saat ini adalah ${CYAN}Rp $total${RESET}"
     fi
   done  
 }
