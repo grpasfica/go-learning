@@ -15,18 +15,27 @@ BLACK="\033[30m"
 YELLOW="\033[33m"
 MAGENTA="\033[35m"
 
-# Global variable
+# Global variable (array)
 bulan=(januari februari maret april mei juni juli agustus september oktober november desember)
 pemasukkan=(1500000 3000000 5000000 1000000 2500000 6500000 4000000 1000000 2000000 3000000 0 0)
 
 # Function login dengan parameter username dan password
 login(){
+  # Local variable
+  local username=$username
+  local password=$password
+
+  # Kondisi jika username dan password bernilai benar
   if [[ "$username" = "graciarp_" && "$password" = "rahasia123" ]]; then
-    echo -e "\n\nSelamat Datang, ${CYAN}$username ${RESET}!"
+    echo -e "\nSelamat Datang, ${CYAN}$username ${RESET}!"
+    # Mengembalikan nilai benar
     return 0
+
+  # Kondisi jika salah satu (username / password) bernilai salah
   else
     echo -e "${RED}\nUsername atau Password yang Anda masukkan salah !"
     echo -e "Silakan coba lagi.${RESET}"
+    # Mengembalikan nilai salah
     return 1
   fi
 }
@@ -41,6 +50,7 @@ income(){
     echo "  3. Total Data Pemasukkan"
     echo "  4. Kembali ke Menu Utama"
     
+    # inputkan pilihan menu
     echo -ne "\n  Pilih Menu(1-4): "
     read menu_pemasukkan
     
@@ -139,7 +149,7 @@ while (( attempt <= 3 )); do
   read -s password
   
   # Kondisi jika login bernilai benar
-  if login; then
+  if login "$username" "$password"; then
     break
 
   # Kondisi jika login bernilai salah
