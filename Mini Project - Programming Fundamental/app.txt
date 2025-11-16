@@ -1,0 +1,164 @@
+#!/bin/bash
+
+: << 'WARNA'
+Berikut ini adalah beberapa pilihan warna yang sudah disimpan ke dalam variabel untuk mempercantik tampilan:
+- CYAN untuk warna foreground cyan dengan kode warna 36
+- RESET untuk warna default terminal dengan kode warna 0
+- BG_WHITE untuk warna background putih dengan kode warna 47
+WARNA
+
+# Global variable
+CYAN="\033[36m"
+RESET="\033[0m"
+RED="\033[31m"
+BLACK="\033[30m"
+YELLOW="\033[33m"
+
+# Function login dengan parameter username dan password
+login(){
+  if [[ "$username" = "graciarp_" && "$password" = "rahasia123" ]]; then
+    echo -e "\n\nSelamat Datang, ${CYAN}$username ${RESET}!"
+    return 0
+  else
+    echo -e "${RED}\nUsername atau Password yang Anda masukkan salah !"
+    echo -e "Silakan coba lagi.${RESET}"
+    return 1
+  fi
+}
+
+# Function Pemasukkan
+income(){
+
+  # Looping menu pemasukkan
+  while true; do
+    echo -e "${YELLOW}\n  === MENU PEMASUKKAN ===${RESET}\n"
+    echo "  1. Lihat Pemasukkan Sebelumnya"
+    echo "  2. Input Pemasukkan"
+    echo "  3. Akumulasi Pemasukkan"
+    echo "  4. Kembali ke Menu Utama"
+    
+    echo -ne "\n  Pilih Menu: "
+    read menu_pemasukkan
+    
+    if [[ "$menu_pemasukkan" = 1 ]]; then
+      # Deklarasi Array Asosiatif
+      declare -A pemasukkan=(
+        [januari]=4500000
+        [februari]=5000000
+        [maret]=0
+        [april]=0
+        [mei]=0
+        [juni]=0
+        [juli]=0
+        [agustus]=0
+        [september]=0
+        [oktober]=0
+        [november]=0
+        [desember]=0
+      )
+
+      # Menampilkan semua data
+      echo "  Berikut ini adalah data pemasukkan untuk Tahun 2025"
+      for bulan in "${!pemasukkan[@]}"; do
+        echo "  $bulan: ${pemasukkan[bulan]}"
+      done
+    fi
+  done  
+}
+
+# Function Pengeluaran
+outcome(){
+  echo "ini method outcome"
+}
+
+# Function Saldo
+saldo(){
+  echo "ini method saldo"
+}
+
+echo -e "${CYAN}"
+echo " --------------------------------------------------------------"
+echo "|                                                              |"
+printf "|   ${RESET}%-58s${CYAN} |\n" "SELAMAT DATANG DI APLIKASI MANAJEMEN KEUANGAN SEDERHANA"
+echo "|                                                              |"
+echo -e " --------------------------------------------------------------${RESET}"
+
+# Login
+attempt=1
+max_attempt=3
+
+# Kesempatan 3x jika login gagal
+while (( attempt <= 3 )); do
+  echo -e "\nSilahkan Login Terlebih Dahulu!"
+  echo -n "Username: "
+  read username
+  echo -n "Password: "
+  read -s password
+  
+  # Kondisi jika login bernilai benar
+  if login; then
+    break
+
+  # Kondisi jika login bernilai salah
+  else
+    ((attempt++))
+  fi
+  
+  # Jika sudah 3x gagal
+  if (( attempt > max_attempt )); then
+    echo -e "${RED}Anda telah gagal login 3 kali. Program keluar.${RESET}"
+    exit 1
+  fi
+done
+
+# Looping menu utama
+while true; do
+  echo -e "${CYAN}\n=== ${RESET}${BOLD}APLIKASI MANAJEMEN KEUANGAN SEDERHANA ${CYAN}===\n${RESET}"
+  echo "1. Pemasukkan" 
+  echo "2. Pengeluaran"
+  echo "3. Saldo"
+  echo "4. Edit Profile"
+  echo "5. Exit"
+  
+  echo -ne "\nPilih Menu(1-5): "
+  read menu
+  
+  # Validasi Input
+  if [[ "$menu" = 1 ]]; then
+    income
+  elif [[ "$menu" = 2 ]]; then
+    outcome
+  elif [[ "$menu" = 3 ]]; then
+    saldo
+  elif [[ "$menu" = 4 ]]; then
+    edit_profile
+  elif [[ "$menu" = 5 ]]; then
+    break
+  else
+    # Nested IF  
+    if ! [[ "$menu" =~ ^[0-9]$ ]]; then
+      echo -e "${RED}INPUTKAN ANGKA!!!${RESET}"
+      continue
+    elif ! [[ "$menu" =~ ^[1-4]$ ]]; then
+      echo -e "${RED}ANGKA YANG DIINPUTKAN DILUAR PILIHAN!${RESET}" 
+      continue
+    else
+      break
+    fi
+  fi
+    
+  # Looping untuk lanjut atau berhenti
+  while true; do
+    echo -ne "\n${CYAN}Apakah ingin memilih menu kembali? (y/n): "
+    read next
+    
+    if ! [[ "$next" =~ ^[nNyY]$ ]]; then
+      echo -e "${RED}Harap inputkan 'Y' atau 'N' ! \n${RESET}"
+    elif [[ "$next" = 'n' || "$next" = 'N' ]]; then
+      echo -e "Baik, sampai jumpa kembali ...\n${RESET}"
+      exit 0
+    else
+      break 
+    fi
+  done
+done
