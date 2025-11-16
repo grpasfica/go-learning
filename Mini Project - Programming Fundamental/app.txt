@@ -7,12 +7,16 @@ Berikut ini adalah beberapa pilihan warna yang sudah disimpan ke dalam variabel 
 - BG_WHITE untuk warna background putih dengan kode warna 47
 WARNA
 
-# Global variable
+# Global variable untuk warna
 CYAN="\033[36m"
 RESET="\033[0m"
 RED="\033[31m"
 BLACK="\033[30m"
 YELLOW="\033[33m"
+
+# Global variable
+bulan=(januari februari maret april mei juni juli agustus september oktober november desember)
+pemasukkan=(1500000 3000000 5000000 1000000 2500000 6500000 4000000 1000000 2000000 3000000 0 0)
 
 # Function login dengan parameter username dan password
 login(){
@@ -28,30 +32,43 @@ login(){
 
 # Function Pemasukkan
 income(){
-
   # Looping menu pemasukkan
   while true; do
     echo -e "${YELLOW}\n  === MENU PEMASUKKAN ===${RESET}\n"
-    echo "  1. Lihat Pemasukkan Sebelumnya"
-    echo "  2. Input Pemasukkan"
+    echo "  1. Lihat Data Pemasukkan"
+    echo "  2. Input Data Pemasukkan"
     echo "  3. Akumulasi Pemasukkan"
     echo "  4. Kembali ke Menu Utama"
     
-    echo -ne "\n  Pilih Menu: "
+    echo -ne "\n  Pilih Menu(1-4): "
     read menu_pemasukkan
     
     if [[ "$menu_pemasukkan" = 1 ]]; then
-      # Array
-      bulan=(januari februari maret april mei juni juli agustus september oktober november desember)
-      pemasukkan=(1500000 3000000 5000000 1000000 2500000 6500000 4000000 1000000 2000000 3000000 0 0)
-
       # Menampilkan semua data
       echo -e "\n  DATA PEMASUKKAN TAHUN 2025"
-      printf "  %-10s ${CYAN} | ${RESET}%-15s\n" "Bulan" "Pemasukkan"
+
+      printf "  %-10s ${CYAN} | ${RESET}%-17s\n" "Bulan" "Pemasukkan"
       for ((i=0; i<${#bulan[@]}; i++)); do
-	printf "  %-10s${RESET} ${CYAN} | ${RESET}%-15s\n" "${bulan[i]}" "${pemasukkan[i]}"
+	printf "  %-10s${RESET} ${CYAN} | ${RESET}%-17s\n" "${bulan[i]}" "${pemasukkan[i]}"
 	# echo "  ${bulan[i]} : ${pemasukkan[i]}"
       done
+    elif [[ "$menu_pemasukkan" = 2 ]]; then
+      echo -e "\n  INPUT DATA PEMASUKKAN"
+
+      echo -n "  Pemasukkan bulan ke-: "
+      read angka_bulan
+
+      if [[ "$angka_bulan" -ge 1 && "$angka_bulan" -le 12 ]]; then
+	index=$((angka_bulan-1))
+	echo -n "  Jumlah pemasukkan : "
+	read jml_pemasukkan
+	
+	# Update data
+      	pemasukkan[$index]=$jml_pemasukkan
+      	echo -e "  Data pada bulan ${YELLOW}${bulan[$index]}${RESET} berhasil diubah."
+      else 
+	echo -e "${RED}  Harap masukkan Angka 1-12 ! ${RESET}"
+      fi
     fi
   done  
 }
