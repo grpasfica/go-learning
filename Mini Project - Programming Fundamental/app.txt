@@ -48,20 +48,20 @@ income(){
       # Menampilkan semua data
       echo -e "\n  DATA PEMASUKKAN TAHUN 2025"
 
-      printf "  %-10s ${CYAN} | ${RESET}%-17s\n" "Bulan" "Pemasukkan"
+      printf "  %-10s ${YELLOW} | ${RESET}%-17s\n" "Bulan" "Pemasukkan"
       for ((i=0; i<${#bulan[@]}; i++)); do
-          printf "  %-10s${RESET} ${CYAN} | ${RESET}%-17s\n" "${bulan[i]}" "${pemasukkan[i]}"
+          printf "  %-10s${RESET} ${YELLOW} | ${RESET}%-17s\n" "${bulan[i]}" "${pemasukkan[i]}"
       done
 
     elif [[ "$menu_pemasukkan" = 2 ]]; then
-      echo -e "\n  INPUT DATA PEMASUKKAN"
+      echo -e "\n${YELLOW}  INPUT DATA PEMASUKKAN${RESET}"
 
       echo -n "  Pemasukkan bulan ke-: "
       read angka_bulan
 
       if [[ "$angka_bulan" -ge 1 && "$angka_bulan" -le 12 ]]; then
         index=$((angka_bulan-1))
-        echo -n "  Jumlah pemasukkan : "
+        echo -n "  Jumlah pemasukkan   : "
         read jml_pemasukkan
         
         # Update data
@@ -71,7 +71,7 @@ income(){
 	      echo -e "${RED}  Harap masukkan Angka 1-12 ! ${RESET}"
       fi
     elif [[ "$menu_pemasukkan" = 3 ]]; then
-      echo -e "\n TOTAL DATA PEMASUKKAN"
+      echo -e "\n${YELLOW}  TOTAL DATA PEMASUKKAN${RESET}"
       
       # inisiasi variabel total
       total=0
@@ -106,17 +106,17 @@ outcome(){
 
         total=$((total+pengeluaran[i]))
     done
-    echo -e "  Total pengeluaran saat ini adalah ${MAGENTA} Rp $total"
+    echo -e "\n  Total pengeluaran bulan November : ${MAGENTA} Rp $total${RESET}"
 
-    echo -e "${MAGENTA}  Kembali ke Menu Utama"
-    
+    # Update data
+    echo -e "  Saldo awal bulan November        : ${MAGENTA} Rp ${pemasukkan[10]}${RESET}"
+    pemasukkan[10]=$((pemasukkan[10]-total))
+    echo -e "  Saldo akhir bulan November       : ${MAGENTA} Rp ${pemasukkan[10]}"
+
+    echo -e "${MAGENTA}  Kembali ke menu utama ..."
+
     break
   done
-}
-
-# Function Saldo
-saldo(){
-  echo "ini method saldo"
 }
 
 echo -e "${CYAN}"
@@ -159,11 +159,10 @@ while true; do
   echo -e "${CYAN}\n=== ${RESET}${BOLD}APLIKASI MANAJEMEN KEUANGAN SEDERHANA ${CYAN}===\n${RESET}"
   echo "1. Pemasukkan" 
   echo "2. Pengeluaran"
-  echo "3. Saldo"
-  echo "4. Edit Profile"
-  echo "5. Exit"
+  echo "3. Edit Profile"
+  echo "4. Exit"
   
-  echo -ne "\nPilih Menu(1-5): "
+  echo -ne "\nPilih Menu(1-4): "
   read menu
   
   # Validasi Input
@@ -172,10 +171,8 @@ while true; do
   elif [[ "$menu" = 2 ]]; then
     outcome
   elif [[ "$menu" = 3 ]]; then
-    saldo
-  elif [[ "$menu" = 4 ]]; then
     edit_profile
-  elif [[ "$menu" = 5 ]]; then
+  elif [[ "$menu" = 4 ]]; then
     break
   else
     # Nested IF  
