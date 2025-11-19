@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func hitungParkir(jam int, isMember bool, isHoliday bool) int {
-	// Tarif dasar
+	// Inisiasi total
 	total := 0
 
 	// 2 jam pertama = Rp 5000
@@ -32,11 +32,11 @@ func hitungParkir(jam int, isMember bool, isHoliday bool) int {
 }
 
 func main() {
-	// Contoh 1: 4 jam, bukan member, bukan hari libur
+	// 4 jam, bukan member, bukan hari libur
 	total1 := hitungParkir(4, false, false)
 	fmt.Println("Total biaya (4 jam, non-member, bukan libur): Rp", total1)
 
-	// Contoh 2: 2 jam, member, hari libur
+	// 2 jam, member, hari libur
 	total2 := hitungParkir(2, true, true)
 	fmt.Println("Total biaya (2 jam, member, hari libur): Rp", total2)
 }
